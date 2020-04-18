@@ -1,0 +1,44 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: deschedulers.erbowl.com
+spec:
+  group: erbowl.com
+  version: v1beta
+  validation:
+    openAPIV3Schema:
+      required:
+      - lifetimeMinutes
+      - intervalMinutes
+      - selector
+      properties:
+        spec:
+          properties:
+            lifetimeMinutes:
+              type: integer
+            intervalMinutes:
+              type: integer
+            selector:
+              type: object
+              items:
+                type: object
+                additionalProperties:
+                  type: string
+  scope: Cluster
+  names:
+    plural: deschedulers
+    singular: descheduler
+    kind: Descheduler
+    shortNames:
+    - des
+  additionalPrinterColumns:
+  - name: lifetime (Minutes)
+    type: integer
+    JSONPath: .spec.lifetimeMinutes
+  - name: interval (Minutes)
+    type: integer
+    JSONPath: .spec.intervalMinutes
+  - name: Age
+    type: date
+    JSONPath: .metadata.creationTimestamp
+  

@@ -1,0 +1,9 @@
+apiVersion: erbowl.com/v1beta
+kind: Descheduler
+metadata:
+  name: test
+spec:
+  selector:
+    app: nginx
+  lifetimeMinutes: 5
+  intervalMinutes: 2
